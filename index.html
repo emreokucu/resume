@@ -75,6 +75,11 @@
       border-radius: 4px;
       color: white;
       font-size: 0.9em;
+      cursor: pointer;
+      transition: opacity 0.3s;
+    }
+    #legend span:hover {
+      opacity: 0.8;
     }
     .zoom-controls {
       text-align: center;
@@ -106,7 +111,7 @@
   <div id="emre-timeline"></div>
   <div id="legend"></div>
   <div id="details">
-    <p>Click on a bar in the timeline to view details. Hover over bars for quick info.</p>
+    <p>Click on a bar in the timeline to view details. Hover over bars for quick info. Click on a legend item to select and zoom to that period.</p>
   </div>
 </div>
 
@@ -126,24 +131,24 @@
     'Open to Opportunities': '#aec7e8'
   };
 
-  // Items with NO text on bars (content: '')
+  // Items with NO text on bars (content: ''), and added 'company' field
   const items = new vis.DataSet([
     // Education
-    { id: 1, content: '', start: '2009-09', end: '2011-06', title: '<b>Marmara University</b><br>BSc Mechanical Engineering<br>2009–2011 (GPA 3.76)<br>Transferred to ITU', style: 'background-color: ' + companyColors['Marmara University'] + ';', details: '<h2>BSc at Marmara University</h2><p>2009–2011 (GPA 3.76), transferred to ITU.</p><img src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Marmara_University_logo.jpg" alt="Marmara University">' },
-    { id: 2, content: '', start: '2011-09', end: '2014-06', title: '<b>Istanbul Technical University</b><br>BSc Mechanical Engineering<br>2011–2014 (GPA 2.61)<br>Best final project award', style: 'background-color: ' + companyColors['Istanbul Technical University'] + ';', details: '<h2>BSc at Istanbul Technical University</h2><p>2011–2014 (GPA 2.61, best final project award).</p><img src="https://images.adsttc.com/media/images/55e8/911f/6c9d/b5fd/a200/0034/medium_jpg/itu_aerial.jpg?1441304828" alt="Istanbul Technical University Campus">' },
-    { id: 3, content: '', start: '2014-09', end: '2016-06', title: '<b>Balıkesir University</b><br>MSc Mechanical Engineering<br>2014–2016 (GPA 3.66)<br>Publication: 3D-printed human brain', style: 'background-color: ' + companyColors['Balıkesir University'] + ';', details: '<h2>MSc at Balıkesir University</h2><p>2014–2016 (GPA 3.66).<br>Publication: 3D-printed human brain via FDM using MRI data (3D-PTS2016).</p><img src="https://balikesir.edu.tr/site/resim/site_logo.png" alt="Balıkesir University">' },
+    { id: 1, content: '', start: '2009-09', end: '2011-06', title: '<b>Marmara University</b><br>BSc Mechanical Engineering<br>2009–2011 (GPA 3.76)<br>Transferred to ITU', style: 'background-color: ' + companyColors['Marmara University'] + ';', details: '<h2>BSc at Marmara University</h2><p>2009–2011 (GPA 3.76), transferred to ITU.</p><img src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Marmara_University_logo.jpg" alt="Marmara University">', company: 'Marmara University' },
+    { id: 2, content: '', start: '2011-09', end: '2014-06', title: '<b>Istanbul Technical University</b><br>BSc Mechanical Engineering<br>2011–2014 (GPA 2.61)<br>Best final project award', style: 'background-color: ' + companyColors['Istanbul Technical University'] + ';', details: '<h2>BSc at Istanbul Technical University</h2><p>2011–2014 (GPA 2.61, best final project award).</p><img src="https://images.adsttc.com/media/images/55e8/911f/6c9d/b5fd/a200/0034/medium_jpg/itu_aerial.jpg?1441304828" alt="Istanbul Technical University Campus">', company: 'Istanbul Technical University' },
+    { id: 3, content: '', start: '2014-09', end: '2016-06', title: '<b>Balıkesir University</b><br>MSc Mechanical Engineering<br>2014–2016 (GPA 3.66)<br>Publication: 3D-printed human brain', style: 'background-color: ' + companyColors['Balıkesir University'] + ';', details: '<h2>MSc at Balıkesir University</h2><p>2014–2016 (GPA 3.66).<br>Publication: 3D-printed human brain via FDM using MRI data (3D-PTS2016).</p><img src="https://balikesir.edu.tr/site/resim/site_logo.png" alt="Balıkesir University">', company: 'Balıkesir University' },
 
     // Experiences
-    { id: 4, content: '', start: '2014-10', end: '2017-08', title: '<b>Akın Agricultural Machinery</b><br>Oct 2014 – Aug 2017<br>CNC operations, design of agricultural equipment, KOSGEB R&D project', style: 'background-color: ' + companyColors['Akın Agricultural Machinery'] + ';', details: '<h2>Mechanical Engineer @ Akın Agricultural Machinery</h2><p>Oct 2014 – Aug 2017, Balıkesir<br>Operation/maintenance of CNC (lathe & plasma). Design of trailers, feed mixers, vacuum trucks, loaders. Manufacturing, hand calculations, hands-on experience. Completed KOSGEB R&D project (certified log loader).</p><img src="https://ndeco.com/wp-content/uploads/2023/06/triple-parked-scaled.jpg" alt="Agricultural Feed Mixer">' },
-    { id: 5, content: '', start: '2017-09', end: '2017-12', title: '<b>Azimli Agricultural Equipments</b><br>Sep 2017–Dec 2017<br>Setup/maintenance of CNC plasma cutters, staff training', style: 'background-color: ' + companyColors['Azimli Agricultural Equipments'] + ';', details: '<h2>CNC Consultancy @ Azimli</h2><p>Sep 2017–Dec 2017, Balıkesir<br>Setup, operation, maintenance of CNC plasma cutters. CAD file creation, staff training for manufacturing parts.</p><img src="https://machitech.com/wp-content/uploads/2019/03/20180315_151722.jpg" alt="CNC Plasma Cutter in Workshop">' },
-    { id: 6, content: '', start: '2018-04', end: '2018-05', title: '<b>Özkan Metal</b><br>Apr–May 2018<br>Setup/maintenance of CNC plasma cutters, staff training', style: 'background-color: ' + companyColors['Özkan Metal'] + ';', details: '<h2>CNC Consultancy @ Özkan</h2><p>Apr–May 2018, Balıkesir<br>Setup, operation, maintenance of CNC plasma cutters. CAD file creation, staff training.</p><img src="https://machitech.com/wp-content/uploads/2019/03/20180315_151722.jpg" alt="CNC Plasma Cutter in Workshop">' },
-    { id: 7, content: '', start: '2018-05', end: '2019-08', title: '<b>Dadaş Machinery</b><br>May 2018 – Aug 2019<br>Design/analysis of mining equipment, hydraulic calculations, certification', style: 'background-color: ' + companyColors['Dadaş Machinery'] + ';', details: '<h2>Mechanical Engineer @ Dadaş Machinery</h2><p>May 2018 – Aug 2019, Balıkesir<br>Design & analysis of scaler boom (Hitachi 170, Volvo L110 for mining), drill rig pipe system, excavator buckets/booms/attachments. Hydraulic calculations, manufacturing execution & certification.</p><img src="https://www.gradall.com/img/products/models/mining/thumbnail-slider-4.jpg" alt="Mining Excavator Scaler Boom">' },
-    { id: 8, content: '', start: '2019-10', end: '2020-03', title: '<b>GENBA Machinery</b><br>Oct 2019 – Mar 2020<br>Design of wind turbine platforms, pricing activities', style: 'background-color: ' + companyColors['GENBA Machinery'] + ';', details: '<h2>Mechanical Engineer @ GENBA Machinery</h2><p>Oct 2019 – Mar 2020, Balıkesir<br>Design of wind turbine maintenance platform. Pricing for Enercon wind turbine equipment.</p><img src="https://i.ytimg.com/vi/wY4-2WH-2Yw/maxresdefault.jpg" alt="Wind Turbine Maintenance Platform">' },
-    { id: 9, content: '', start: '2021-01', end: '2021-06', title: '<b>Şişecam</b><br>Jan 2021 – Jun 2021<br>R&D in glass fiber, equipment design, 5S activities', style: 'background-color: ' + companyColors['Şişecam'] + ';', details: '<h2>Mechanical Engineer @ Şişecam (Young Talent Program)</h2><p>Jan 2021 – Jun 2021, Balıkesir<br>R&D in glass fiber factory (platinum workshop). Equipment design & pricing, 5S activities, real-time production data experience.</p><img src="https://thumbs.dreamstime.com/b/factory-workshop-interior-machines-glass-production-background-fiberglass-industry-production-glass-line-factory-112400090.jpg" alt="Glass Fiber Production Workshop">' },
-    { id: 10, content: '', start: '2021-06', end: '2024-12', title: '<b>Turkish Aerospace (TUSAŞ)</b><br>Jun 2021 – Dec 2024<br>FEM modeling, post-processing, stress analysis', style: 'background-color: ' + companyColors['Turkish Aerospace (TUSAŞ)'] + ';', details: '<h2>Mechanical Engineer – Structural Analysis @ Turkish Aerospace (TUSAŞ)</h2><p>Jun 2021 – Dec 2024, Istanbul<br>Finite element modeling (GFEM/DFEM) with Hypermesh, Patran, Python. Post-processing (Python, Excel, Hyperview). Reports, presentations, hand calculations for stress analysis.</p><img src="https://www.digitalengineering247.com/images/article/Figure-2_altair-Modeli_opt.jpg" alt="Aerospace Structural FEA Model">' },
+    { id: 4, content: '', start: '2014-10', end: '2017-08', title: '<b>Akın Agricultural Machinery</b><br>Oct 2014 – Aug 2017<br>CNC operations, design of agricultural equipment, KOSGEB R&D project', style: 'background-color: ' + companyColors['Akın Agricultural Machinery'] + ';', details: '<h2>Mechanical Engineer @ Akın Agricultural Machinery</h2><p>Oct 2014 – Aug 2017, Balıkesir<br>Operation/maintenance of CNC (lathe & plasma). Design of trailers, feed mixers, vacuum trucks, loaders. Manufacturing, hand calculations, hands-on experience. Completed KOSGEB R&D project (certified log loader).</p><img src="https://ndeco.com/wp-content/uploads/2023/06/triple-parked-scaled.jpg" alt="Agricultural Feed Mixer">', company: 'Akın Agricultural Machinery' },
+    { id: 5, content: '', start: '2017-09', end: '2017-12', title: '<b>Azimli Agricultural Equipments</b><br>Sep 2017–Dec 2017<br>Setup/maintenance of CNC plasma cutters, staff training', style: 'background-color: ' + companyColors['Azimli Agricultural Equipments'] + ';', details: '<h2>CNC Consultancy @ Azimli</h2><p>Sep 2017–Dec 2017, Balıkesir<br>Setup, operation, maintenance of CNC plasma cutters. CAD file creation, staff training for manufacturing parts.</p><img src="https://machitech.com/wp-content/uploads/2019/03/20180315_151722.jpg" alt="CNC Plasma Cutter in Workshop">', company: 'Azimli Agricultural Equipments' },
+    { id: 6, content: '', start: '2018-04', end: '2018-05', title: '<b>Özkan Metal</b><br>Apr–May 2018<br>Setup/maintenance of CNC plasma cutters, staff training', style: 'background-color: ' + companyColors['Özkan Metal'] + ';', details: '<h2>CNC Consultancy @ Özkan</h2><p>Apr–May 2018, Balıkesir<br>Setup, operation, maintenance of CNC plasma cutters. CAD file creation, staff training.</p><img src="https://machitech.com/wp-content/uploads/2019/03/20180315_151722.jpg" alt="CNC Plasma Cutter in Workshop">', company: 'Özkan Metal' },
+    { id: 7, content: '', start: '2018-05', end: '2019-08', title: '<b>Dadaş Machinery</b><br>May 2018 – Aug 2019<br>Design/analysis of mining equipment, hydraulic calculations, certification', style: 'background-color: ' + companyColors['Dadaş Machinery'] + ';', details: '<h2>Mechanical Engineer @ Dadaş Machinery</h2><p>May 2018 – Aug 2019, Balıkesir<br>Design & analysis of scaler boom (Hitachi 170, Volvo L110 for mining), drill rig pipe system, excavator buckets/booms/attachments. Hydraulic calculations, manufacturing execution & certification.</p><img src="https://www.gradall.com/img/products/models/mining/thumbnail-slider-4.jpg" alt="Mining Excavator Scaler Boom">', company: 'Dadaş Machinery' },
+    { id: 8, content: '', start: '2019-10', end: '2020-03', title: '<b>GENBA Machinery</b><br>Oct 2019 – Mar 2020<br>Design of wind turbine platforms, pricing activities', style: 'background-color: ' + companyColors['GENBA Machinery'] + ';', details: '<h2>Mechanical Engineer @ GENBA Machinery</h2><p>Oct 2019 – Mar 2020, Balıkesir<br>Design of wind turbine maintenance platform. Pricing for Enercon wind turbine equipment.</p><img src="https://i.ytimg.com/vi/wY4-2WH-2Yw/maxresdefault.jpg" alt="Wind Turbine Maintenance Platform">', company: 'GENBA Machinery' },
+    { id: 9, content: '', start: '2021-01', end: '2021-06', title: '<b>Şişecam</b><br>Jan 2021 – Jun 2021<br>R&D in glass fiber, equipment design, 5S activities', style: 'background-color: ' + companyColors['Şişecam'] + ';', details: '<h2>Mechanical Engineer @ Şişecam (Young Talent Program)</h2><p>Jan 2021 – Jun 2021, Balıkesir<br>R&D in glass fiber factory (platinum workshop). Equipment design & pricing, 5S activities, real-time production data experience.</p><img src="https://thumbs.dreamstime.com/b/factory-workshop-interior-machines-glass-production-background-fiberglass-industry-production-glass-line-factory-112400090.jpg" alt="Glass Fiber Production Workshop">', company: 'Şişecam' },
+    { id: 10, content: '', start: '2021-06', end: '2024-12', title: '<b>Turkish Aerospace (TUSAŞ)</b><br>Jun 2021 – Dec 2024<br>FEM modeling, post-processing, stress analysis', style: 'background-color: ' + companyColors['Turkish Aerospace (TUSAŞ)'] + ';', details: '<h2>Mechanical Engineer – Structural Analysis @ Turkish Aerospace (TUSAŞ)</h2><p>Jun 2021 – Dec 2024, Istanbul<br>Finite element modeling (GFEM/DFEM) with Hypermesh, Patran, Python. Post-processing (Python, Excel, Hyperview). Reports, presentations, hand calculations for stress analysis.</p><img src="https://www.digitalengineering247.com/images/article/Figure-2_altair-Modeli_opt.jpg" alt="Aerospace Structural FEA Model">', company: 'Turkish Aerospace (TUSAŞ)' },
     
     // Present (point, no text)
-    { id: 11, content: '', start: '2026-01', type: 'point', title: '<b>Open to Opportunities</b><br>January 2026 onwards<br>Seeking roles in aerospace, mechanical design, FEA/simulation', style: 'background-color: ' + companyColors['Open to Opportunities'] + ';', details: '<h2>Present Day – January 2026</h2><p>After 3+ years of advanced structural analysis at TUSAŞ, currently open to new opportunities in aerospace, mechanical design, FEA/simulation, or related fields.<br>Contact: emreokucu@gmail.com | +90 535 769 45 26</p><img src="https://www.vistaprojects.com/wp-content/uploads/2025/10/Mechanical-Engineering-Software-scaled.jpg.webp" alt="Mechanical Engineer Working with CAD Software">' }
+    { id: 11, content: '', start: '2026-01', type: 'point', title: '<b>Open to Opportunities</b><br>January 2026 onwards<br>Seeking roles in aerospace, mechanical design, FEA/simulation', style: 'background-color: ' + companyColors['Open to Opportunities'] + ';', details: '<h2>Present Day – January 2026</h2><p>After 3+ years of advanced structural analysis at TUSAŞ, currently open to new opportunities in aerospace, mechanical design, FEA/simulation, or related fields.<br>Contact: emreokucu@gmail.com | +90 535 769 45 26</p><img src="https://www.vistaprojects.com/wp-content/uploads/2025/10/Mechanical-Engineering-Software-scaled.jpg.webp" alt="Mechanical Engineer Working with CAD Software">', company: 'Open to Opportunities' }
   ]);
 
   // Configuration options
@@ -174,10 +179,24 @@
     }
   });
 
-  // Generate legend
+  // Function to select and zoom to a company
+  function selectCompany(company) {
+    const matchingItems = items.get({
+      filter: function (item) {
+        return item.company === company;
+      }
+    });
+    if (matchingItems.length > 0) {
+      myTimeline.setSelection(matchingItems.map(i => i.id));
+      document.getElementById('details').innerHTML = matchingItems[0].details;
+      myTimeline.fit({ids: matchingItems.map(i => i.id), animation: true});
+    }
+  }
+
+  // Generate legend with onclick
   let legendHTML = '';
   Object.keys(companyColors).forEach(company => {
-    legendHTML += `<span style="background-color: ${companyColors[company]};">${company}</span>`;
+    legendHTML += `<span onclick="selectCompany('${company}')" style="background-color: ${companyColors[company]};">${company}</span>`;
   });
   document.getElementById('legend').innerHTML = legendHTML;
 </script>
