@@ -1,0 +1,116 @@
+# Emre Okucu
+
+**Istanbul, Turkey** | **+90 535 769 45 26** | **emreokucu@gmail.com**
+
+## EXPERIENCE
+
+**Turkish Aerospace (TUSAŞ)**  
+Istanbul, Turkey  
+[https://www.tusas.com/](https://www.tusas.com/)  
+**Mechanical Engineer - Structural Analysis**  
+Jun 2021 – Dec 2024
+- Created finite element models (GFEM and DFEM) using Hypermesh, Patran, and Python.
+- Post-processed structural analysis data using Python, Excel, Patran, and Hyperview.
+- Created reports and presentations for analysis results and concepts.
+- Performed hand calculations for stress analysis.
+
+**Şişecam**  
+Balıkesir, Turkey  
+[https://www.sisecam.com.tr/en](https://www.sisecam.com.tr/en)  
+**Mechanical Engineer - Design, Manufacturing, Pricing**  
+Jan 2021 – Jun 2021
+- Participated in Şişecam Young Talent Program as a mechanical engineer trainee.
+- Conducted R&D activities in the glass fiber factory (platinum workshop).
+- Designed and priced manufacturing equipment.
+- Performed 5S activities.
+- Gained experience with real-time glass production data.
+
+**GENBA Machinery**  
+Balıkesir, Turkey  
+[http://www.genba.com.tr](http://www.genba.com.tr)  
+**Mechanical Engineer - Design, Analysis, Pricing**  
+Oct 2019 – Mar 2020
+- Designed wind turbine maintenance platforms.
+- Priced equipment for Enercon wind turbines.
+
+**Dadaş Machinery**  
+Balıkesir, Turkey  
+**Mechanical Engineer - Design, Analysis, Manufacturing, and Certification**  
+May 2018 – Aug 2019
+- Designed and analyzed scaler booms for Hitachi 170 and Volvo L110 (mining industry).
+- Designed and analyzed drill rig pipe installation systems.
+- Designed excavator buckets, booms, and attachments.
+- Selected hydraulic parts and performed hydraulic calculations.
+- Executed manufacturing operations for designed machinery.
+- Certified manufactured machinery.
+
+**Özkan Metal**  
+Balıkesir, Turkey  
+**Consultancy**  
+Apr 2018 – May 2018
+- Set up, operated, and maintained a CNC plasma cutter.
+- Created CAD files for plasma cutting.
+- Trained staff on CNC plasma cutter operation.
+
+**Azimli Agricultural Equipments**  
+Balıkesir, Turkey  
+[http://www.azimlitarim.com/tarim-makineleri/anasayfa](http://www.azimlitarim.com/tarim-makineleri/anasayfa)  
+**Consultancy**  
+Sep 2017 – Dec 2017
+- Set up, operated, and maintained a CNC plasma cutter.
+- Created CAD files for manufactured parts (plasma cutting).
+- Trained staff on CNC plasma cutter operation.
+
+**Akın Agricultural Machinery**  
+Balıkesir, Turkey  
+[http://www.akinromork.com/](http://www.akinromork.com/)  
+**Mechanical Engineer - Design, Analysis, Manufacturing, Maintenance, and Certification**  
+Oct 2014 – Aug 2017
+- Operated, coded, and maintained CNC machinery (lathe and plasma cutter).
+- Designed trailers, feed mixers, vacuum trucks, and loaders.
+- Executed manufacturing operations for designed products.
+- Performed hand calculations for designs and manufacturing.
+- Gained extensive hands-on experience.
+- Managed KOSGEB R&D project: Designed, manufactured, and certified a log loader per regulations.
+
+## EDUCATION
+
+**Balıkesir University**  
+Balıkesir, Turkey  
+**MSc, Mechanical Engineering**  
+2014 – 2016  
+- Cumulative GPA: 3.66/4.0
+
+**Istanbul Technical University (ITU)**  
+Istanbul, Turkey  
+**BSc, Mechanical Engineering**  
+2011 – 2014  
+- Cumulative GPA: 2.61/4.0
+- Graduated with Best Final Project Award
+
+**Marmara University**  
+Istanbul, Turkey  
+**BSc, Mechanical Engineering**  
+2009 – 2011  
+- Cumulative GPA: 3.76/4.0
+- Transferred to Istanbul Technical University
+
+## ADDITIONAL INFORMATION
+
+- IELTS Academic: 7.5 (Jul 2020)
+- Boeing Certified: Structural Repair for Engineers (2024)
+- Certificate of Excellence – FIGES R&D Engineer Training Course (Aug 2017) – [https://figes.com.tr/en/home](https://figes.com.tr/en/home)
+- Mastership Certificate – CNC Machining (Republic of Turkey, Ministry of National Education)
+- Master Trainer Certificate – CNC Machining (Republic of Turkey, Ministry of National Education)
+- Publication: "Production of a Human Brain via Fused Deposition Modeling Using Magnetic Resonance Imaging (MRI) Scan Data" – International Symposium on 3D Printing (3D-PTS2016) – [ResearchGate Link](https://www.researchgate.net/publication/301892469_PRODUCTION_OF_A_HUMAN_BRAIN_VIA_FUSED_DEPOSITION_MODELING_USING_MAGNETIC_RESONANCE_IMAGING_MRI_SCAN_DATA)
+- Portfolio and additional info available upon request
+
+## COMPUTER SKILLS
+
+- Autodesk Inventor – Advanced
+- AutoCAD – Advanced
+- Hypermesh – Advanced
+- Hyperview – Advanced
+- Patran – Advanced
+- Python – Advanced
+- Excel – Advanced
