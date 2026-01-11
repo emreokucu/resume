@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Emre Okucu - Resume</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Emre Okucu - Mechanical Engineering Journey</title>
+  
+  <!-- vis-timeline CSS -->
+  <link href="https://unpkg.com/vis-timeline@latest/styles/vis-timeline-graph2d.min.css" rel="stylesheet" type="text/css" />
+  
+  <!-- vis-timeline JS -->
+  <script src="https://unpkg.com/vis-timeline@latest/standalone/umd/vis-timeline-graph2d.min.js"></script>
+  
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -12,129 +19,166 @@
       padding: 40px 20px;
       color: #1a365d;
     }
-    .resume-wrapper {
-      max-width: 900px;
+    h1 {
+      text-align: center;
+      margin-bottom: 50px;
+      color: #2c5282;
+    }
+    .timeline-wrapper {
+      max-width: 1200px;
       margin: 0 auto;
       background: white;
-      padding: 40px;
+      padding: 30px;
       border-radius: 12px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.12);
     }
-    h1 {
+    #emre-timeline {
+      height: 300px;
+      border: 1px solid #ddd;
+    }
+    .vis-item .vis-item-content {
+      cursor: pointer;
+      font-weight: bold;
+      padding: 5px;
+      color: white;
+    }
+    #legend {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+    #legend span {
+      padding: 5px 10px;
+      border-radius: 4px;
+      color: white;
+      font-size: 0.9em;
+      cursor: pointer;
+      transition: opacity 0.3s;
+    }
+    #legend span:hover {
+      opacity: 0.8;
+    }
+    .zoom-controls {
       text-align: center;
-      color: #2c5282;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
     }
-    .contact {
-      text-align: center;
-      margin-bottom: 40px;
-      font-size: 1.1em;
+    .zoom-controls button {
+      padding: 8px 16px;
+      margin: 0 10px;
+      background-color: #2b6cb0;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
     }
-    h2 {
-      color: #2b6cb0;
-      border-bottom: 2px solid #d0e0f5;
-      padding-bottom: 8px;
-      margin-top: 40px;
-    }
-    h3 a {
-      color: #2b6cb0;
-      text-decoration: none;
-    }
-    h3 a:hover {
-      text-decoration: underline;
-    }
-    p {
-      margin: 5px 0;
-    }
-    ul {
-      padding-left: 25px;
-      margin: 10px 0;
-    }
-    .section {
-      margin-bottom: 30px;
+    .zoom-controls button:hover {
+      background-color: #1e40af;
     }
   </style>
 </head>
 <body>
-  <div class="resume-wrapper">
-    <h1>Emre Okucu</h1>
-    <div class="contact">
-      Istanbul, Turkey | +90 535 769 45 26 | emreokucu@gmail.com
-    </div>
 
-    <h2>Experience</h2>
-    <div class="section">
-      <h3><a href="turkish-aerospace.html">Turkish Aerospace (TUSAŞ)</a></h3>
-      <p>Istanbul, Turkey | <a href="https://www.tusas.com/" target="_blank">tusas.com</a><br>Mechanical Engineer - Structural Analysis<br>Jun 2021 – Dec 2024</p>
-    </div>
+<h1>Emre Okucu — Mechanical Engineering Journey</h1>
 
-    <div class="section">
-      <h3><a href="sisecam.html">Şişecam</a></h3>
-      <p>Balıkesir, Turkey | <a href="https://www.sisecam.com.tr/en" target="_blank">sisecam.com.tr</a><br>Mechanical Engineer - Design, Manufacturing, Pricing<br>Jan 2021 – Jun 2021</p>
-    </div>
-
-    <div class="section">
-      <h3><a href="genba-machinery.html">GENBA Machinery</a></h3>
-      <p>Balıkesir, Turkey | <a href="http://www.genba.com.tr" target="_blank">genba.com.tr</a><br>Mechanical Engineer - Design, Analysis, Pricing<br>Oct 2019 – Mar 2020</p>
-    </div>
-
-    <div class="section">
-      <h3><a href="dadas-machinery.html">Dadaş Machinery</a></h3>
-      <p>Balıkesir, Turkey<br>Mechanical Engineer - Design, Analysis, Manufacturing and Certification<br>May 2018 – Aug 2019</p>
-    </div>
-
-    <div class="section">
-      <h3><a href="ozkan-metal.html">Özkan Metal</a></h3>
-      <p>Balıkesir, Turkey<br>Consultancy<br>Apr 2018 – May 2018</p>
-    </div>
-
-    <div class="section">
-      <h3><a href="azimli-agricultural-equipments.html">Azimli Agricultural Equipments</a></h3>
-      <p>Balıkesir, Turkey | <a href="http://www.azimlitarim.com/tarim-makineleri/anasayfa" target="_blank">azimlitarim.com</a><br>Consultancy<br>Sep 2017 – Dec 2017</p>
-    </div>
-
-    <div class="section">
-      <h3><a href="akin-agricultural-machinery.html">Akın Agricultural Machinery</a></h3>
-      <p>Balıkesir, Turkey | <a href="http://www.akinromork.com/" target="_blank">akinromork.com</a><br>Mechanical Engineer - Design, Analysis, Manufacturing, Maintenance and Certification<br>Oct 2014 – Aug 2017</p>
-    </div>
-
-    <h2>Education</h2>
-    <div class="section">
-      <h3>Marmara University</h3>
-      <p>Istanbul, Turkey<br>BSc, Mechanical Engineering<br>2009 – 2011<br>Cumulative GPA: 3.76/4.0 (transferred to Istanbul Technical University)</p>
-    </div>
-
-    <div class="section">
-      <h3>Istanbul Technical University</h3>
-      <p>Istanbul, Turkey<br>BSc, Mechanical Engineering<br>2011 – 2014<br>Cumulative GPA: 2.61/4.0<br>Graduated with Best Final Project Award</p>
-    </div>
-
-    <div class="section">
-      <h3>Balıkesir University</h3>
-      <p>Balıkesir, Turkey<br>MSc, Mechanical Engineering<br>2014 – 2016<br>Cumulative GPA: 3.66/4.0</p>
-    </div>
-
-    <h2>Additional Information</h2>
-    <ul>
-      <li>IELTS Academic: 7.5 (Jul 2020)</li>
-      <li>Boeing Certified: Structural Repair for Engineers (2024)</li>
-      <li>Certificate of Excellence – FIGES R&D Engineer Training Course (Aug 2017) – <a href="https://figes.com.tr/en/home" target="_blank">figes.com.tr</a></li>
-      <li>Mastership Certificate – CNC Machining (Republic of Turkey, Ministry of National Education)</li>
-      <li>Master Trainer Certificate – CNC Machining (Republic of Turkey, Ministry of National Education)</li>
-      <li>Publication: "Production of a Human Brain via Fused Deposition Modeling Using Magnetic Resonance Imaging (MRI) Scan Data" – <a href="https://www.researchgate.net/publication/301892469_PRODUCTION_OF_A_HUMAN_BRAIN_VIA_FUSED_DEPOSITION_MODELING_USING_MAGNETIC_RESONANCE_IMAGING_MRI_SCAN_DATA" target="_blank">ResearchGate</a></li>
-      <li>Portfolio and additional info available upon request</li>
-    </ul>
-
-    <h2>Computer Skills</h2>
-    <ul>
-      <li>Autodesk Inventor – Advanced</li>
-      <li>AutoCAD – Advanced</li>
-      <li>Hypermesh – Advanced</li>
-      <li>Hyperview – Advanced</li>
-      <li>Patran – Advanced</li>
-      <li>Python – Advanced</li>
-      <li>Excel – Advanced</li>
-    </ul>
+<div class="timeline-wrapper">
+  <div class="zoom-controls">
+    <button onclick="myTimeline.zoomIn(0.5)">Zoom In</button>
+    <button onclick="myTimeline.zoomOut(0.5)">Zoom Out</button>
   </div>
+  <div id="emre-timeline"></div>
+  <div id="legend"></div>
+</div>
+
+<script>
+  // Company color map (same as before)
+  const companyColors = {
+    'Marmara University': '#1f77b4',
+    'Istanbul Technical University': '#ff7f0e',
+    'Balıkesir University': '#2ca02c',
+    'Akın Agricultural Machinery': '#d62728',
+    'Azimli Agricultural Equipments': '#9467bd',
+    'Özkan Metal': '#8c564b',
+    'Dadaş Machinery': '#e377c2',
+    'GENBA Machinery': '#7f7f7f',
+    'Şişecam': '#bcbd22',
+    'Turkish Aerospace (TUSAŞ)': '#17becf',
+    'Open to Opportunities': '#aec7e8'
+  };
+
+  // Items with NO text on bars (content: ''), added 'company' field, and 'url' for new page
+  const items = new vis.DataSet([
+    // Education
+    { id: 1, content: '', start: '2009-09', end: '2011-06', title: '<b>Marmara University</b><br>BSc Mechanical Engineering<br>2009–2011 (GPA 3.76)<br>Transferred to ITU', style: 'background-color: ' + companyColors['Marmara University'] + ';', url: 'marmara-university.html', company: 'Marmara University' },
+    { id: 2, content: '', start: '2011-09', end: '2014-06', title: '<b>Istanbul Technical University</b><br>BSc Mechanical Engineering<br>2011–2014 (GPA 2.61)<br>Best final project award', style: 'background-color: ' + companyColors['Istanbul Technical University'] + ';', url: 'istanbul-technical-university.html', company: 'Istanbul Technical University' },
+    { id: 3, content: '', start: '2014-09', end: '2016-06', title: '<b>Balıkesir University</b><br>MSc Mechanical Engineering<br>2014–2016 (GPA 3.66)<br>Publication: 3D-printed human brain', style: 'background-color: ' + companyColors['Balıkesir University'] + ';', url: 'balikesir-university.html', company: 'Balıkesir University' },
+
+    // Experiences
+    { id: 4, content: '', start: '2014-10', end: '2017-08', title: '<b>Akın Agricultural Machinery</b><br>Oct 2014 – Aug 2017<br>CNC operations, design of agricultural equipment, KOSGEB R&D project', style: 'background-color: ' + companyColors['Akın Agricultural Machinery'] + ';', url: 'akin-agricultural-machinery.html', company: 'Akın Agricultural Machinery' },
+    { id: 5, content: '', start: '2017-09', end: '2017-12', title: '<b>Azimli Agricultural Equipments</b><br>Sep 2017–Dec 2017<br>Setup/maintenance of CNC plasma cutters, staff training', style: 'background-color: ' + companyColors['Azimli Agricultural Equipments'] + ';', url: 'azimli-agricultural-equipments.html', company: 'Azimli Agricultural Equipments' },
+    { id: 6, content: '', start: '2018-04', end: '2018-05', title: '<b>Özkan Metal</b><br>Apr–May 2018<br>Setup/maintenance of CNC plasma cutters, staff training', style: 'background-color: ' + companyColors['Özkan Metal'] + ';', url: 'ozkan-metal.html', company: 'Özkan Metal' },
+    { id: 7, content: '', start: '2018-05', end: '2019-08', title: '<b>Dadaş Machinery</b><br>May 2018 – Aug 2019<br>Design/analysis of mining equipment, hydraulic calculations, certification', style: 'background-color: ' + companyColors['Dadaş Machinery'] + ';', url: 'dadas-machinery.html', company: 'Dadaş Machinery' },
+    { id: 8, content: '', start: '2019-10', end: '2020-03', title: '<b>GENBA Machinery</b><br>Oct 2019 – Mar 2020<br>Design of wind turbine platforms, pricing activities', style: 'background-color: ' + companyColors['GENBA Machinery'] + ';', url: 'genba-machinery.html', company: 'GENBA Machinery' },
+    { id: 9, content: '', start: '2021-01', end: '2021-06', title: '<b>Şişecam</b><br>Jan 2021 – Jun 2021<br>R&D in glass fiber, equipment design, 5S activities', style: 'background-color: ' + companyColors['Şişecam'] + ';', url: 'sisecam.html', company: 'Şişecam' },
+    { id: 10, content: '', start: '2021-06', end: '2024-12', title: '<b>Turkish Aerospace (TUSAŞ)</b><br>Jun 2021 – Dec 2024<br>FEM modeling, post-processing, stress analysis', style: 'background-color: ' + companyColors['Turkish Aerospace (TUSAŞ)'] + ';', url: 'turkish-aerospace.html', company: 'Turkish Aerospace (TUSAŞ)' },
+    
+    // Present (point, no text)
+    { id: 11, content: '', start: '2026-01', type: 'point', title: '<b>Open to Opportunities</b><br>January 2026 onwards<br>Seeking roles in aerospace, mechanical design, FEA/simulation', style: 'background-color: ' + companyColors['Open to Opportunities'] + ';', url: 'open-to-opportunities.html', company: 'Open to Opportunities' }
+  ]);
+
+  // Configuration options
+  const options = {
+    width: '100%',
+    height: '300px',
+    stack: true,
+    showMajorLabels: true,
+    showMinorLabels: true,
+    zoomable: true,
+    moveable: true,
+    selectable: true,
+    editable: false,
+    margin: { item: 10 },
+    orientation: 'top'
+  };
+
+  // Create the timeline
+  const container = document.getElementById('emre-timeline');
+  const myTimeline = new vis.Timeline(container, items, options);
+
+  // On click, open new page
+  myTimeline.on('click', function(properties) {
+    if (properties.item) {
+      const item = items.get(properties.item);
+      if (item.url) {
+        window.open(item.url, '_blank');
+      }
+    }
+  });
+
+  // Function to select and zoom to a company
+  function selectCompany(company) {
+    const matchingItems = items.get({
+      filter: function (item) {
+        return item.company === company;
+      }
+    });
+    if (matchingItems.length > 0) {
+      myTimeline.setSelection(matchingItems.map(i => i.id));
+      myTimeline.fit({ids: matchingItems.map(i => i.id), animation: true});
+      if (matchingItems[0].url) {
+        window.open(matchingItems[0].url, '_blank');
+      }
+    }
+  }
+
+  // Generate legend with onclick
+  let legendHTML = '';
+  Object.keys(companyColors).forEach(company => {
+    legendHTML += `<span onclick="selectCompany('${company}')" style="background-color: ${companyColors[company]};">${company}</span>`;
+  });
+  document.getElementById('legend').innerHTML = legendHTML;
+</script>
+
 </body>
 </html>
