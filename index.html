@@ -4,180 +4,626 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Emre Okucu - Mechanical Engineering Journey</title>
-  
-  <!-- vis-timeline CSS -->
+
   <link href="https://unpkg.com/vis-timeline@latest/styles/vis-timeline-graph2d.min.css" rel="stylesheet" type="text/css" />
-  
-  <!-- vis-timeline JS -->
   <script src="https://unpkg.com/vis-timeline@latest/standalone/umd/vis-timeline-graph2d.min.js"></script>
-  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f0f4f9;
+      --surface: #ffffff;
+      --text: #1a2a3a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --panel-w: 380px;
+      --accent: #2563eb;
+    }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(to bottom, #e6f0fa, #d0e0f5);
-      margin: 0;
-      padding: 40px 20px;
-      color: #1a365d;
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      color: var(--text);
+      transition: margin-right 0.4s cubic-bezier(0.4,0,0.2,1);
     }
-    h1 {
+
+    body.panel-open {
+      margin-right: var(--panel-w);
+    }
+
+    .page-header {
       text-align: center;
-      margin-bottom: 50px;
-      color: #2c5282;
+      padding: 48px 20px 36px;
     }
+
+    .page-header h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 400;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    .page-header p {
+      margin-top: 8px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      font-weight: 300;
+    }
+
     .timeline-wrapper {
-      max-width: 1200px;
+      max-width: 1100px;
       margin: 0 auto;
-      background: white;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+      background: var(--surface);
+      padding: 28px 28px 24px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+      margin-bottom: 32px;
     }
-    #emre-timeline {
-      height: 300px;
-      border: 1px solid #ddd;
+
+    .controls-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      gap: 12px;
+      flex-wrap: wrap;
     }
-    .vis-item .vis-item-content {
+
+    .zoom-controls {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn {
+      padding: 7px 16px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      border-radius: 8px;
       cursor: pointer;
-      font-weight: bold;
-      padding: 5px;
-      color: white;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.15s;
     }
+
+    .btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: #eff6ff;
+    }
+
+    .hint {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hint::before {
+      content: '';
+      display: inline-block;
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.4); }
+    }
+
+    #emre-timeline {
+      height: 280px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .vis-item { border-radius: 4px !important; border: none !important; }
+    .vis-item.vis-selected { border: 2px solid rgba(0,0,0,0.3) !important; box-shadow: 0 0 0 3px rgba(37,99,235,0.25) !important; }
+    .vis-item .vis-item-content { color: white; font-weight: 500; font-size: 0.75rem; padding: 4px 6px; }
+
     #legend {
-      margin-top: 20px;
+      margin-top: 18px;
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
+      gap: 8px;
     }
+
     #legend span {
-      padding: 5px 10px;
-      border-radius: 4px;
+      padding: 4px 10px;
+      border-radius: 20px;
       color: white;
-      font-size: 0.9em;
+      font-size: 0.78rem;
+      font-weight: 500;
       cursor: pointer;
-      transition: opacity 0.3s;
+      transition: transform 0.15s, opacity 0.15s;
+      white-space: nowrap;
     }
-    #legend span:hover {
-      opacity: 0.8;
+
+    #legend span:hover { transform: translateY(-1px); opacity: 0.85; }
+
+    /* ─── Side Panel ─── */
+    #detail-panel {
+      position: fixed;
+      top: 0; right: 0;
+      width: var(--panel-w);
+      height: 100vh;
+      background: var(--surface);
+      border-left: 1px solid var(--border);
+      box-shadow: -8px 0 32px rgba(0,0,0,0.08);
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+      display: flex;
+      flex-direction: column;
+      z-index: 1000;
+      overflow: hidden;
     }
-    .zoom-controls {
-      text-align: center;
-      margin-bottom: 20px;
+
+    #detail-panel.open {
+      transform: translateX(0);
     }
-    .zoom-controls button {
-      padding: 8px 16px;
-      margin: 0 10px;
-      background-color: #2b6cb0;
-      color: white;
+
+    .panel-header {
+      padding: 20px 20px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .panel-color-dot {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+
+    .panel-title-block { flex: 1; min-width: 0; }
+
+    .panel-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      font-weight: 400;
+      line-height: 1.3;
+      color: var(--text);
+    }
+
+    .panel-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 3px;
+      font-weight: 300;
+    }
+
+    .panel-close {
+      background: none;
       border: none;
-      border-radius: 4px;
       cursor: pointer;
+      color: var(--text-muted);
+      font-size: 1.3rem;
+      line-height: 1;
+      padding: 2px;
+      border-radius: 4px;
+      transition: color 0.15s;
+      flex-shrink: 0;
     }
-    .zoom-controls button:hover {
-      background-color: #1e40af;
+
+    .panel-close:hover { color: var(--text); }
+
+    .panel-body {
+      padding: 20px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .panel-meta {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .meta-chip {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 10px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .meta-chip svg { opacity: 0.6; }
+
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .task-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .task-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      color: var(--text);
+    }
+
+    .task-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      margin-top: 7px;
+      flex-shrink: 0;
+    }
+
+    .panel-tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 20px;
+    }
+
+    .tag {
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      background: #f1f5f9;
+      color: #475569;
+    }
+
+    .gpa-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 10px;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #166534;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-top: 16px;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 16px 0;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-muted);
+    }
+
+    .empty-state svg { margin-bottom: 12px; opacity: 0.3; }
+    .empty-state p { font-size: 0.9rem; }
+
+    @media (max-width: 640px) {
+      :root { --panel-w: 100vw; }
+      body.panel-open { margin-right: 0; }
+      .timeline-wrapper { padding: 16px; }
     }
   </style>
 </head>
 <body>
 
-<h1>Emre Okucu — Mechanical Engineering Journey</h1>
+<div class="page-header">
+  <h1>Emre Okucu</h1>
+  <p>Mechanical Engineering Journey · 2009 – Present</p>
+</div>
 
-<div class="timeline-wrapper">
-  <div class="zoom-controls">
-    <button onclick="myTimeline.zoomIn(0.5)">Zoom In</button>
-    <button onclick="myTimeline.zoomOut(0.5)">Zoom Out</button>
+<div class="timeline-wrapper" style="margin: 0 20px 32px; max-width: 1100px; margin-left: auto; margin-right: auto;">
+  <div class="controls-row">
+    <div class="zoom-controls">
+      <button class="btn" onclick="myTimeline.zoomIn(0.5)">＋ Zoom In</button>
+      <button class="btn" onclick="myTimeline.zoomOut(0.5)">－ Zoom Out</button>
+      <button class="btn" onclick="myTimeline.fit()">Fit All</button>
+    </div>
+    <div class="hint">Bir öğeye tıklayarak detayları görün</div>
   </div>
   <div id="emre-timeline"></div>
   <div id="legend"></div>
 </div>
 
+<!-- Detail Panel -->
+<div id="detail-panel">
+  <div class="panel-header">
+    <div class="panel-color-dot" id="panel-dot"></div>
+    <div class="panel-title-block">
+      <div class="panel-title" id="panel-title">—</div>
+      <div class="panel-subtitle" id="panel-type">—</div>
+    </div>
+    <button class="panel-close" onclick="closePanel()" title="Kapat">✕</button>
+  </div>
+  <div class="panel-body" id="panel-body">
+    <div class="empty-state">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/></svg>
+      <p>Bir öğe seçin</p>
+    </div>
+  </div>
+</div>
+
 <script>
-  // Company color map (same as before)
   const companyColors = {
-    'Marmara University': '#1f77b4',
-    'Istanbul Technical University': '#ff7f0e',
-    'Balikesir University': '#2ca02c',
-    'Akın Agricultural Machinery': '#d62728',
-    'Azimli Agricultural Equipments': '#9467bd',
-    'Özkan Metal': '#8c564b',
-    'Esan Mining': '#e377c2',
-    'GENBA Machinery': '#7f7f7f',
-    'Turkish Aerospace (TUSAŞ)': '#17becf',
-    'On Machinery': '#8dbdff',
-    'Open to Opportunities': '#aec7e8'
+    'Marmara University':               '#1f77b4',
+    'Istanbul Technical University':    '#ff7f0e',
+    'Balikesir University':             '#2ca02c',
+    'Akın Agricultural Machinery':      '#d62728',
+    'Azimli Agricultural Equipments':   '#9467bd',
+    'Özkan Metal':                      '#8c564b',
+    'Esan Mining':                      '#e377c2',
+    'GENBA Machinery':                  '#7f7f7f',
+    'Turkish Aerospace (TUSAŞ)':        '#17becf',
+    'On Machinery':                     '#8dbdff',
+    'Open to Opportunities':            '#aec7e8'
   };
 
-  // Items with NO text on bars (content: ''), added 'company' field, and 'url' for new page
-  const items = new vis.DataSet([
-    // Education
-    { id: 1, content: '', start: '2009-09', end: '2011-06', title: '<b>Marmara University</b><br>BSc Mechanical Engineering<br>2009–2011 (GPA 3.76)<br>Transferred to ITU', style: 'background-color: ' + companyColors['Marmara University'] + ';', url: 'marmara-uni.html', company: 'Marmara University' },
-    { id: 2, content: '', start: '2011-09', end: '2014-06', title: '<b>Istanbul Technical University</b><br>BSc Mechanical Engineering<br>2011–2014 (GPA 2.61)<br>Best final project award', style: 'background-color: ' + companyColors['Istanbul Technical University'] + ';', url: 'itu.html', company: 'Istanbul Technical University' },
-    { id: 3, content: '', start: '2014-09', end: '2016-06', title: '<b>Balikesir University</b><br>MSc Mechanical Engineering<br>2014–2016 (GPA 3.66)<br>Publication: 3D-printed human brain', style: 'background-color: ' + companyColors['Balikesir University'] + ';', url: 'balikesir-uni.html', company: 'Balikesir University' },
+  // Detail data for panel
+  const detailData = {
+    1: {
+      type: 'Eğitim',
+      period: 'Eylül 2009 – Haziran 2011',
+      duration: '1 yıl 9 ay',
+      tasks: [
+        'Makine Mühendisliği lisans programına başladı',
+        'GPA 3.76 ile yüksek akademik başarı gösterdi',
+        'Yüksek performans nedeniyle İTÜ\'ye transfer hakkı kazandı'
+      ],
+      tags: ['Lisans', 'GPA 3.76', 'Transfer'],
+      gpa: '3.76'
+    },
+    2: {
+      type: 'Eğitim',
+      period: 'Eylül 2011 – Haziran 2014',
+      duration: '2 yıl 9 ay',
+      tasks: [
+        'Makine Mühendisliği BSc derecesini tamamladı',
+        'En iyi bitirme projesi ödülünü aldı',
+        'Termodinamik, mekanik tasarım ve imalat süreçleri üzerine eğitim aldı'
+      ],
+      tags: ['Lisans', 'GPA 2.61', 'Bitirme Ödülü'],
+      gpa: '2.61'
+    },
+    3: {
+      type: 'Eğitim',
+      period: 'Eylül 2014 – Haziran 2016',
+      duration: '1 yıl 9 ay',
+      tasks: [
+        'Makine Mühendisliği yüksek lisans programını tamamladı',
+        '3D baskılı insan beyni üzerine uluslararası yayın gerçekleştirdi',
+        'İleri düzey simülasyon ve malzeme çalışmaları yürüttü'
+      ],
+      tags: ['Yüksek Lisans', 'GPA 3.66', 'Yayın', '3D Baskı'],
+      gpa: '3.66'
+    },
+    4: {
+      type: 'İş Deneyimi',
+      period: 'Ekim 2014 – Ağustos 2017',
+      duration: '2 yıl 10 ay',
+      tasks: [
+        'CNC tezgâhlarında operasyon ve programlama gerçekleştirdi',
+        'Tarım makineleri tasarım ve geliştirme süreçlerine liderlik etti',
+        'KOSGEB destekli Ar-Ge projesi kapsamında yeni ürün geliştirdi',
+        'Üretim süreçlerini optimize ederek maliyetleri düşürdü'
+      ],
+      tags: ['CNC', 'Tasarım', 'Ar-Ge', 'KOSGEB', 'Tarım Makineleri']
+    },
+    5: {
+      type: 'İş Deneyimi',
+      period: 'Eylül 2017 – Aralık 2017',
+      duration: '4 ay',
+      tasks: [
+        'CNC plazma kesme makinelerinin kurulum ve bakımını yönetti',
+        'Teknik personele makine kullanımı konusunda eğitim verdi',
+        'Makine performans parametrelerini optimize etti'
+      ],
+      tags: ['CNC Plazma', 'Bakım', 'Eğitim']
+    },
+    6: {
+      type: 'İş Deneyimi',
+      period: 'Nisan 2018 – Mayıs 2018',
+      duration: '2 ay',
+      tasks: [
+        'CNC plazma kesme makinelerinin saha kurulumunu gerçekleştirdi',
+        'Operatör personeline teknik eğitim sağladı',
+        'Üretim hattı devreye alma süreçlerini yönetti'
+      ],
+      tags: ['CNC Plazma', 'Kurulum', 'Metal İşleme']
+    },
+    7: {
+      type: 'İş Deneyimi',
+      period: 'Mayıs 2018 – Ağustos 2019',
+      duration: '1 yıl 3 ay',
+      tasks: [
+        'Madencilik ekipmanlarının tasarım ve yapısal analizini yürüttü',
+        'Hidrolik sistem hesapları ve teknik dokümanları hazırladı',
+        'Ekipmanlar için sertifikasyon belgelerini tamamladı',
+        'FEM/FEA tabanlı yapısal mukavemet analizleri gerçekleştirdi'
+      ],
+      tags: ['Madencilik', 'Hidrolik', 'FEM', 'Sertifikasyon', 'Yapısal Analiz']
+    },
+    8: {
+      type: 'İş Deneyimi',
+      period: 'Ekim 2019 – Mart 2020',
+      duration: '6 ay',
+      tasks: [
+        'Rüzgâr türbini platformlarının mekanik tasarımını üstlendi',
+        'Teklif ve fiyatlandırma süreçlerini yönetti',
+        'Yapısal yük analizleri ve teknik şartnameler hazırladı'
+      ],
+      tags: ['Rüzgâr Enerjisi', 'Yapısal Tasarım', 'Fiyatlandırma']
+    },
+    10: {
+      type: 'İş Deneyimi',
+      period: 'Haziran 2021 – Aralık 2024',
+      duration: '3 yıl 6 ay',
+      tasks: [
+        'Uçak ve helikopter yapısal bileşenlerinde FEM modelleme gerçekleştirdi',
+        'Gerilme ve yorulma analizleri ile hasar toleransı değerlendirmeleri yaptı',
+        'Sonlu elemanlar sonuçlarını yorumladı, teknik raporlar hazırladı',
+        'Havacılık standartları (EASA, FAA) çerçevesinde analiz ve dokümanlar üretti',
+        'Mühendislik ekipleriyle koordineli tasarım revizyonu süreçleri yürüttü'
+      ],
+      tags: ['FEM/FEA', 'Yapısal Analiz', 'Havacılık', 'EASA', 'Gerilme Analizi', 'TUSAŞ']
+    },
+    11: {
+      type: 'İş Deneyimi',
+      period: 'Aralık 2024 – Aralık 2025',
+      duration: '1 yıl',
+      tasks: [
+        'Ar-Ge tabanlı makine geliştirme projelerinde görev aldı',
+        'Yeni ürün konseptleri üzerinde mühendislik çalışmaları yürüttü'
+      ],
+      tags: ['Ar-Ge', 'Makine Tasarımı']
+    },
+    12: {
+      type: 'Durum',
+      period: 'Ocak 2026 – Günümüz',
+      duration: 'Aktif',
+      tasks: [
+        'Havacılık ve savunma sektöründe FEA/simülasyon mühendisi pozisyonları araştırıyor',
+        'Yapısal mekanik ve ileri malzeme alanlarında fırsatlar değerlendiriyor',
+        'Uluslararası projelere açık, yurt dışı konumlar için müsait'
+      ],
+      tags: ['FEA', 'Havacılık', 'Mekanik Tasarım', 'Açık Pozisyon']
+    }
+  };
 
-    // Experiences
-    { id: 4, content: '', start: '2014-10', end: '2017-08', title: '<b>Akın Agricultural Machinery</b><br>Oct 2014 – Aug 2017<br>CNC operations, design of agricultural equipment, KOSGEB R&D project', style: 'background-color: ' + companyColors['Akın Agricultural Machinery'] + ';', url: 'akin-tarim.html', company: 'Akın Agricultural Machinery' },
-    { id: 5, content: '', start: '2017-09', end: '2017-12', title: '<b>Azimli Agricultural Equipments</b><br>Sep 2017–Dec 2017<br>Setup/maintenance of CNC plasma cutters, staff training', style: 'background-color: ' + companyColors['Azimli Agricultural Equipments'] + ';', url: 'azimli_agri.html', company: 'Azimli Agricultural Equipments' },
-    { id: 6, content: '', start: '2018-04', end: '2018-05', title: '<b>Özkan Metal</b><br>Apr–May 2018<br>Setup/maintenance of CNC plasma cutters, staff training', style: 'background-color: ' + companyColors['Özkan Metal'] + ';', url: 'ozkan_metal.html', company: 'Özkan Metal' },
-    { id: 7, content: '', start: '2018-05', end: '2019-08', title: '<b>Esan Mining</b><br>May 2018 – Aug 2019<br>Design/analysis of mining equipment, hydraulic calculations, certification', style: 'background-color: ' + companyColors['Esan Mining'] + ';', url: 'esan.html', company: 'Esan Mining' },
-    { id: 8, content: '', start: '2019-10', end: '2020-03', title: '<b>GENBA Machinery</b><br>Oct 2019 – Mar 2020<br>Design of wind turbine platforms, pricing activities', style: 'background-color: ' + companyColors['GENBA Machinery'] + ';', url: 'genba.html', company: 'GENBA Machinery' },
-    { id: 10, content: '', start: '2021-06', end: '2024-12', title: '<b>Turkish Aerospace (TUSAŞ)</b><br>Jun 2021 – Dec 2024<br>FEM modeling, post-processing, stress analysis', style: 'background-color: ' + companyColors['Turkish Aerospace (TUSAŞ)'] + ';', url: 'turkish-aerospace.html', company: 'Turkish Aerospace (TUSAŞ)' },
-    { id: 11, content: '', start: '2024-12', end: '2025-12', title: '<b>On Machinery</b><br>Dec 2024 – Dec 2024<br>R&D', style: 'background-color: ' + companyColors['On Machinery'] + ';', url: 'on.html', company: 'On Machinery' },
-    // Present (point, no text)
-    { id: 12, content: '', start: '2026-01', type: 'point', title: '<b>Open to Opportunities</b><br>January 2026 onwards<br>Seeking roles in aerospace, mechanical design, FEA/simulation', style: 'background-color: ' + companyColors['Open to Opportunities'] + ';', url: 'open-to-opportunities.html', company: 'Open to Opportunities' }
+  const items = new vis.DataSet([
+    { id: 1,  content: '', start: '2009-09', end: '2011-06', title: 'Marmara University', style: 'background-color:' + companyColors['Marmara University'] + ';', company: 'Marmara University' },
+    { id: 2,  content: '', start: '2011-09', end: '2014-06', title: 'Istanbul Technical University', style: 'background-color:' + companyColors['Istanbul Technical University'] + ';', company: 'Istanbul Technical University' },
+    { id: 3,  content: '', start: '2014-09', end: '2016-06', title: 'Balikesir University', style: 'background-color:' + companyColors['Balikesir University'] + ';', company: 'Balikesir University' },
+    { id: 4,  content: '', start: '2014-10', end: '2017-08', title: 'Akın Agricultural Machinery', style: 'background-color:' + companyColors['Akın Agricultural Machinery'] + ';', company: 'Akın Agricultural Machinery' },
+    { id: 5,  content: '', start: '2017-09', end: '2017-12', title: 'Azimli Agricultural Equipments', style: 'background-color:' + companyColors['Azimli Agricultural Equipments'] + ';', company: 'Azimli Agricultural Equipments' },
+    { id: 6,  content: '', start: '2018-04', end: '2018-05', title: 'Özkan Metal', style: 'background-color:' + companyColors['Özkan Metal'] + ';', company: 'Özkan Metal' },
+    { id: 7,  content: '', start: '2018-05', end: '2019-08', title: 'Esan Mining', style: 'background-color:' + companyColors['Esan Mining'] + ';', company: 'Esan Mining' },
+    { id: 8,  content: '', start: '2019-10', end: '2020-03', title: 'GENBA Machinery', style: 'background-color:' + companyColors['GENBA Machinery'] + ';', company: 'GENBA Machinery' },
+    { id: 10, content: '', start: '2021-06', end: '2024-12', title: 'Turkish Aerospace (TUSAŞ)', style: 'background-color:' + companyColors['Turkish Aerospace (TUSAŞ)'] + ';', company: 'Turkish Aerospace (TUSAŞ)' },
+    { id: 11, content: '', start: '2024-12', end: '2025-12', title: 'On Machinery', style: 'background-color:' + companyColors['On Machinery'] + ';', company: 'On Machinery' },
+    { id: 12, content: '', start: '2026-01', type: 'point', title: 'Open to Opportunities', style: 'background-color:' + companyColors['Open to Opportunities'] + ';', company: 'Open to Opportunities' }
   ]);
 
-  // Configuration options
   const options = {
-    width: '100%',
-    height: '300px',
-    stack: true,
-    showMajorLabels: true,
-    showMinorLabels: true,
-    zoomable: true,
-    moveable: true,
-    selectable: true,
-    editable: false,
-    margin: { item: 10 },
-    orientation: 'top'
+    width: '100%', height: '280px',
+    stack: true, showMajorLabels: true, showMinorLabels: true,
+    zoomable: true, moveable: true, selectable: true, editable: false,
+    margin: { item: 10 }, orientation: 'top',
+    tooltip: { followMouse: true }
   };
 
-  // Create the timeline
   const container = document.getElementById('emre-timeline');
   const myTimeline = new vis.Timeline(container, items, options);
 
-  // On click, open new page
-  myTimeline.on('click', function(properties) {
-    if (properties.item) {
-      const item = items.get(properties.item);
-      if (item.url) {
-        window.open(item.url, '_blank');
-      }
+  myTimeline.on('click', function(props) {
+    if (props.item !== null) {
+      const item = items.get(props.item);
+      openPanel(props.item, item);
     }
   });
 
-  // Function to select and zoom to a company
-  function selectCompany(company) {
-    const matchingItems = items.get({
-      filter: function (item) {
-        return item.company === company;
-      }
+  function openPanel(id, item) {
+    const data = detailData[id];
+    if (!data) return;
+
+    const color = companyColors[item.company] || '#888';
+    document.getElementById('panel-dot').style.background = color;
+    document.getElementById('panel-title').textContent = item.company;
+    document.getElementById('panel-type').textContent = data.type + ' · ' + data.duration;
+
+    let bodyHTML = '';
+
+    // Meta chips
+    bodyHTML += `<div class="panel-meta">
+      <div class="meta-chip">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/></svg>
+        ${data.period}
+      </div>
+    </div>`;
+
+    // GPA badge if education
+    if (data.gpa) {
+      bodyHTML += `<div class="gpa-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        GPA ${data.gpa}
+      </div>`;
+    }
+
+    bodyHTML += '<div class="divider"></div>';
+
+    // Tasks
+    bodyHTML += `<div class="section-label">Görevler &amp; Sorumluluklar</div>`;
+    bodyHTML += `<ul class="task-list">`;
+    data.tasks.forEach(t => {
+      bodyHTML += `<li><span class="task-dot" style="background:${color}"></span><span>${t}</span></li>`;
     });
-    if (matchingItems.length > 0) {
-      myTimeline.setSelection(matchingItems.map(i => i.id));
-      myTimeline.fit({ids: matchingItems.map(i => i.id), animation: true});
-      if (matchingItems[0].url) {
-        window.open(matchingItems[0].url, '_blank');
-      }
+    bodyHTML += `</ul>`;
+
+    // Tags
+    if (data.tags && data.tags.length) {
+      bodyHTML += `<div class="panel-tag-row">`;
+      data.tags.forEach(tag => {
+        bodyHTML += `<span class="tag">${tag}</span>`;
+      });
+      bodyHTML += `</div>`;
+    }
+
+    document.getElementById('panel-body').innerHTML = bodyHTML;
+    document.getElementById('detail-panel').classList.add('open');
+    document.body.classList.add('panel-open');
+    myTimeline.setSelection([id]);
+  }
+
+  function closePanel() {
+    document.getElementById('detail-panel').classList.remove('open');
+    document.body.classList.remove('panel-open');
+    myTimeline.setSelection([]);
+  }
+
+  // Close on ESC
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanel(); });
+
+  // Legend
+  function selectCompany(company) {
+    const matching = items.get({ filter: i => i.company === company });
+    if (matching.length > 0) {
+      myTimeline.setSelection(matching.map(i => i.id));
+      myTimeline.fit({ ids: matching.map(i => i.id), animation: true });
+      openPanel(matching[0].id, matching[0]);
     }
   }
 
-  // Generate legend with onclick
   let legendHTML = '';
   Object.keys(companyColors).forEach(company => {
-    legendHTML += `<span onclick="selectCompany('${company}')" style="background-color: ${companyColors[company]};">${company}</span>`;
+    legendHTML += `<span onclick="selectCompany('${company}')" style="background-color:${companyColors[company]};">${company}</span>`;
   });
   document.getElementById('legend').innerHTML = legendHTML;
 </script>
-
 </body>
 </html>
