@@ -550,7 +550,7 @@
 
   const container = document.getElementById('emre-timeline');
   const myTimeline = new vis.Timeline(container, items, options);
-  setTimeout(() => myTimeline.redraw(), 100);
+  setTimeout(() => myTimeline.redraw(), 300);
 
   myTimeline.on('click', function(props) {
     if (props.item !== null) {
