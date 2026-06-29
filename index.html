@@ -346,7 +346,7 @@
       <button class="btn" onclick="myTimeline.zoomOut(0.5)">－ Zoom Out</button>
       <button class="btn" onclick="myTimeline.fit()">Fit All</button>
     </div>
-    <div class="hint">Bir öğeye tıklayarak detayları görün</div>
+    <div class="hint">Click any item to see details</div>
   </div>
   <div id="emre-timeline"></div>
   <div id="legend"></div>
@@ -360,14 +360,25 @@
       <div class="panel-title" id="panel-title">—</div>
       <div class="panel-subtitle" id="panel-type">—</div>
     </div>
-    <button class="panel-close" onclick="closePanel()" title="Kapat">✕</button>
+    <button class="panel-close" onclick="closePanel()" title="Close">✕</button>
   </div>
   <div class="panel-body" id="panel-body">
     <div class="empty-state">
       <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/></svg>
-      <p>Bir öğe seçin</p>
+      <p>Select an item</p>
     </div>
   </div>
+</div>
+
+<div style="max-width:1100px; margin: 0 auto 48px; padding: 0 20px; display:flex; gap:12px; flex-wrap:wrap;">
+  <a href="YOUR_CV_LINK_HERE" target="_blank" style="display:inline-flex; align-items:center; gap:8px; padding:10px 20px; background:#2563eb; color:white; border-radius:10px; font-family:'DM Sans',sans-serif; font-size:0.88rem; font-weight:500; text-decoration:none; box-shadow:0 2px 8px rgba(37,99,235,0.3); transition:opacity 0.15s;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+    Download CV
+  </a>
+  <a href="mailto:emreokucu@gmail.com" style="display:inline-flex; align-items:center; gap:8px; padding:10px 20px; background:white; color:#2563eb; border:1px solid #bfdbfe; border-radius:10px; font-family:'DM Sans',sans-serif; font-size:0.88rem; font-weight:500; text-decoration:none; transition:opacity 0.15s;" onmouseover="this.style.opacity='0.75'" onmouseout="this.style.opacity='1'">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+    emreokucu@gmail.com
+  </a>
 </div>
 
 <script>
@@ -388,129 +399,130 @@
   // Detail data for panel
   const detailData = {
     1: {
-      type: 'Eğitim',
-      period: 'Eylül 2009 – Haziran 2011',
-      duration: '1 yıl 9 ay',
+      type: 'Education',
+      period: 'Sep 2009 – Jun 2011',
+      duration: '1 yr 9 mo',
       tasks: [
-        'Makine Mühendisliği lisans programına başladı',
-        'GPA 3.76 ile yüksek akademik başarı gösterdi',
-        'Yüksek performans nedeniyle İTÜ\'ye transfer hakkı kazandı'
+        'Started BSc program in Mechanical Engineering',
+        'Achieved strong academic performance with a GPA of 3.76',
+        'Earned transfer eligibility to Istanbul Technical University'
       ],
-      tags: ['Lisans', 'GPA 3.76', 'Transfer'],
+      tags: ['BSc', 'GPA 3.76', 'Transfer'],
       gpa: '3.76'
     },
     2: {
-      type: 'Eğitim',
-      period: 'Eylül 2011 – Haziran 2014',
-      duration: '2 yıl 9 ay',
+      type: 'Education',
+      period: 'Sep 2011 – Jun 2014',
+      duration: '2 yrs 9 mo',
       tasks: [
-        'Makine Mühendisliği BSc derecesini tamamladı',
-        'En iyi bitirme projesi ödülünü aldı',
+        'Completed BSc in Mechanical Engineering',
+        'Received the Best Final Project Award at graduation',
       ],
-      tags: ['Lisans', 'GPA 2.61', 'Bitirme projesi ödülü'],
+      tags: ['BSc', 'GPA 2.61', 'Best Final Project Award'],
       gpa: '2.61'
     },
     3: {
-      type: 'Eğitim',
-      period: 'Eylül 2014 – Haziran 2016',
-      duration: '1 yıl 9 ay',
+      type: 'Education',
+      period: 'Sep 2014 – Jun 2016',
+      duration: '1 yr 9 mo',
       tasks: [
-        'Makine Mühendisliği yüksek lisans programını tamamladı',
-        'Hızlı prototipleme üzerine yayın gerçekleştirdi',
+        'Completed MSc in Mechanical Engineering',
+        'Published research on rapid prototyping using MRI scan data',
       ],
-      tags: ['Yüksek Lisans', 'GPA 3.66', 'Yayın', '3D Baskı'],
+      tags: ['MSc', 'GPA 3.66', 'Publication', '3D Printing'],
       gpa: '3.66'
     },
     4: {
-      type: 'İş Deneyimi',
-      period: 'Ekim 2014 – Ağustos 2017',
-      duration: '2 yıl 10 ay',
+      type: 'Work Experience',
+      period: 'Oct 2014 – Aug 2017',
+      duration: '2 yrs 10 mo',
       tasks: [
-        'CNC metal işeleme tezgâhlarında operasyon ve programlama gerçekleştirdi',
-        'Tarım makineleri tasarımı gerçekleştirdi',
-        'KOSGEB destekli Ar-Ge projesi kapsamında yeni ürün geliştirdi',
-        'Üretim süreçlerini optimize ederek maliyetleri düşürdü'
+        'Operated and programmed CNC metal machining equipment (lathe and plasma cutter)',
+        'Designed agricultural machinery including trailers, feed mixers, vacuum trucks, and loaders',
+        'Led a KOSGEB-funded R&D project: designed, manufactured, and certified a log loader',
+        'Optimized manufacturing processes to reduce costs'
       ],
-      tags: ['CNC', 'Tasarım', 'Ar-Ge', 'KOSGEB', 'Tarım Makineleri']
+      tags: ['CNC', 'Design', 'R&D', 'KOSGEB', 'Agricultural Machinery']
     },
     5: {
-      type: 'İş Deneyimi',
-      period: 'Eylül 2017 – Aralık 2017',
-      duration: '4 ay',
+      type: 'Work Experience',
+      period: 'Sep 2017 – Dec 2017',
+      duration: '4 mo',
       tasks: [
-        'CNC plazma kesme makinelerinin kurulum ve bakımını yönetti',
-        'Teknik personele makine kullanımı konusunda eğitim verdi',
-        'Makine performans parametrelerini optimize etti'
+        'Set up, operated, and maintained a CNC plasma cutter',
+        'Created CAD files for plasma-cut manufactured parts',
+        'Trained staff on CNC plasma cutter operation'
       ],
-      tags: ['CNC Plazma', 'Bakım', 'Eğitim']
+      tags: ['CNC Plasma', 'Maintenance', 'Training']
     },
     6: {
-      type: 'İş Deneyimi',
-      period: 'Nisan 2018 – Mayıs 2018',
-      duration: '2 ay',
+      type: 'Work Experience',
+      period: 'Apr 2018 – May 2018',
+      duration: '2 mo',
       tasks: [
-        'CNC plazma kesme makinelerinin saha kurulumunu gerçekleştirdi',
-        'Operatör personeline teknik eğitim sağladı',
-        'Üretim hattı devreye alma süreçlerini yönetti'
+        'Set up, operated, and maintained a CNC plasma cutter',
+        'Provided technical training to operator staff',
+        'Created CAD files for plasma cutting'
       ],
-      tags: ['CNC Plazma', 'Kurulum', 'Metal İşleme']
+      tags: ['CNC Plasma', 'Setup', 'Metal Fabrication']
     },
     7: {
-      type: 'İş Deneyimi',
-      period: 'Mayıs 2018 – Ağustos 2019',
-      duration: '1 yıl 3 ay',
+      type: 'Work Experience',
+      period: 'May 2018 – Aug 2019',
+      duration: '1 yr 3 mo',
       tasks: [
-        'Madencilik ekipmanlarının tasarım ve yapısal analizini yürüttü',
-        'Hidrolik sistem hesapları ve teknik dokümanları hazırladı',
-        'Ekipmanlar için sertifikasyon belgelerini tamamladı',
-        'FEM tabanlı yapısal mukavemet analizleri gerçekleştirdi'
+        'Designed and analyzed mining equipment (scaler booms, drill rig pipe systems, excavator attachments)',
+        'Performed hydraulic calculations and selected hydraulic components',
+        'Executed manufacturing operations and obtained equipment certifications',
+        'Carried out FEM-based structural strength analyses'
       ],
-      tags: ['Madencilik', 'Hidrolik', 'FEM', 'Sertifikasyon', 'Yapısal Analiz']
+      tags: ['Mining', 'Hydraulics', 'FEM', 'Certification', 'Structural Analysis']
     },
     8: {
-      type: 'İş Deneyimi',
-      period: 'Ekim 2019 – Mart 2020',
-      duration: '6 ay',
+      type: 'Work Experience',
+      period: 'Oct 2019 – Mar 2020',
+      duration: '6 mo',
       tasks: [
-        'Rüzgâr türbini platformlarının mekanik tasarımını üstlendi',
-        'Teklif ve fiyatlandırma süreçlerini yönetti',
-        'Yapısal yük analizleri gerçekleştirdi'
+        'Designed wind turbine maintenance platforms',
+        'Managed pricing and quotation processes for Enercon wind turbines',
+        'Performed structural load analyses'
       ],
-      tags: ['Rüzgâr Enerjisi', 'Yapısal Tasarım', 'Fiyatlandırma']
+      tags: ['Wind Energy', 'Structural Design', 'Pricing']
     },
     10: {
-      type: 'İş Deneyimi',
-      period: 'Haziran 2021 – Aralık 2024',
-      duration: '3 yıl 6 ay',
+      type: 'Work Experience',
+      period: 'Jun 2021 – Dec 2024',
+      duration: '3 yrs 6 mo',
       tasks: [
-        'Uçak yapısal bileşenlerinde sonlu elemanlar analizleri yaptı',
-        'Mukavemet analizlerinde kullanılmak üzere amaca özel yazılımlar yazdı',
-        'Yazdığı yazılımlar sayesinde daha hafif ve daha sağlam yapılar elde edildi',
-        'Sonlu elemanlar sonuçlarını yorumladı, teknik raporlar hazırladı',
-        'Havacılık standartları (EASA, FAA) çerçevesinde analiz ve dokümanlar üretti',
-        'Mühendislik ekipleriyle koordineli tasarım revizyonu süreçleri yürüttü'
+        'Created finite element models (GFEM and DFEM) for aircraft structural components using Hypermesh, Patran, and Python',
+        'Wrote custom analysis tools for processing SOL106 (geometric nonlinearity) data',
+        'Pioneered SOL106 analyses to detect buckling, enabling thinner and lighter structures',
+        'Post-processed FEA results and produced technical reports and presentations',
+        'Performed hand calculations for stress analysis in line with aerospace standards',
+        'Coordinated design revision cycles with engineering teams'
       ],
-      tags: ['FEM/FEA', 'Yapısal Analiz', 'Havacılık', 'EASA', 'Gerilme Analizi', 'TUSAŞ']
+      tags: ['FEM/FEA', 'Structural Analysis', 'Aerospace', 'Python', 'Stress Analysis', 'TUSAŞ']
     },
     11: {
-      type: 'İş Deneyimi',
-      period: 'Aralık 2024 – Aralık 2025',
-      duration: '1 yıl',
+      type: 'Work Experience',
+      period: 'Dec 2024 – Dec 2025',
+      duration: '1 yr',
       tasks: [
-        'Ar-Ge tabanlı makine geliştirme projelerinde görev aldı',
-        'Yeni ürün konseptleri üzerinde mühendislik çalışmaları yürüttü'
+        'Led engineering work on a CNC gantry-type mill built from concrete',
+        'Produced all necessary mechanical designs for the machine',
+        'Helped the company secure government R&D funding'
       ],
-      tags: ['Ar-Ge', 'Makine Tasarımı']
+      tags: ['R&D', 'Machine Design', 'CNC', 'Government Grant']
     },
     12: {
-      type: 'Durum',
-      period: 'Ocak 2026 – Günümüz',
-      duration: 'Aktif',
+      type: 'Status',
+      period: 'Jan 2026 – Present',
+      duration: 'Active',
       tasks: [
-        'Mühendislik yazılımları üzerine çalışmak istiyor',
-        'Uluslararası projelere açık, yurt dışı konumlar için müsait'
+        'Open to engineering roles with a focus on structural analysis or software',
+        'Available for international positions and relocation'
       ],
-      tags: ['Yazılım', 'Açık Pozisyon']
+      tags: ['Open to Work', 'Structural Analysis', 'Engineering Software']
     }
   };
 
@@ -576,7 +588,7 @@
     bodyHTML += '<div class="divider"></div>';
 
     // Tasks
-    bodyHTML += `<div class="section-label">Görevler &amp; Sorumluluklar</div>`;
+    bodyHTML += `<div class="section-label">Duties &amp; Responsibilities</div>`;
     bodyHTML += `<ul class="task-list">`;
     data.tasks.forEach(t => {
       bodyHTML += `<li><span class="task-dot" style="background:${color}"></span><span>${t}</span></li>`;
